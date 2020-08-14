@@ -78,3 +78,4 @@ var alphabeticallyOrderedDivs = $divs.sort(function (a, b) {
     });
     $("[class=transitions]:eq(1)").html(alphabeticallyOrderedDivs);
 });
+$(".rank-choice:odd").css('background-color', '#d5d5d5');
