@@ -58,6 +58,15 @@ var counter = {
         tempSend: XMLHttpRequest.prototype.send,
         callback: function() {
           this.url.includes("save_grade") && counter.onload()
+	  $(".rank-choice:odd").css('background-color', '#d5d5d5');
+		var divs = $("[class=transitions]:eq(1) div.rank-choice");
+$(document).ready(function(e) {
+    var $divs = $("[class=transitions]:eq(1) div.rank-choice");
+var alphabeticallyOrderedDivs = $divs.sort(function (a, b) {
+        return $(a).find('div.domain-verb').text() > $(b).find('div.domain-verb').text();
+    });
+    $("[class=transitions]:eq(1)").html(alphabeticallyOrderedDivs);
+});
         }
     };
 XMLHttpRequest.prototype.open = function(e, t) {
@@ -69,13 +78,3 @@ XMLHttpRequest.prototype.open = function(e, t) {
     if (!t) t = "";
     s_ajaxListener.tempSend.apply(this, arguments), "post" == s_ajaxListener.method.toLowerCase() && (s_ajaxListener.data = e), s_ajaxListener.callback()
 }, hideParseSetting = !1, counter.init();
-
-var divs = $("[class=transitions]:eq(1) div.rank-choice");
-$(document).ready(function(e) {
-    var $divs = $("[class=transitions]:eq(1) div.rank-choice");
-var alphabeticallyOrderedDivs = $divs.sort(function (a, b) {
-        return $(a).find('div.domain-verb').text() > $(b).find('div.domain-verb').text();
-    });
-    $("[class=transitions]:eq(1)").html(alphabeticallyOrderedDivs);
-});
-$(".rank-choice:odd").css('background-color', '#d5d5d5');
