@@ -60,14 +60,11 @@ var checkProbes = function() {
                     if (fails.includes(probe)) {
                         console.log("found failed probe" + probe)
                         $(this).css("color", "red");
-                    } else if {
-                        $(".domain-verb").each(function() {
-                                probe = $(this).text().replace(/(\r\n|\n|\r)/gm, "", " ").split("probe: ").pop().split('  ')[0];
-                                if (succeeds.includes(probe)) {
+                    } else if(succeeds.includes(probe)) {
                                     console.log("found successful probe" + probe)
                                     $(this).css("color", "green");
                                 }
-                            }
+                            
                         });
                 }
 
