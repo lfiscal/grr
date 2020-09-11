@@ -138,8 +138,6 @@ var checkProbes = function() {
     wsucs = $('.kv-bubble.succeed').parent().find(".key-label").text().trim();
   }
 
-
-
   var fails = pFails.concat(wFails);
   var succeeds = psucs.concat(wsucs);
 
@@ -156,7 +154,6 @@ var checkProbes = function() {
     }
 
   });
-
 
   $(".domain-verb:contains('answerFacts')").each(function() {
     probe = $(this).text().replace(/(\r\n|\n|\r)/gm, "", " ").split("probe: ").pop().split('  ')[0];
@@ -183,6 +180,13 @@ function copyActual() {
 }
 copyActual();
 
+function ghost(){
+if ($('.ranked-list:contains("answerFacts")').length > 0) {
+  $('.rank-choice:contains("encyclopedia")').addClass('ency');
+} 
+}
+ghost();
+
 (function() {
   var proxied = window.XMLHttpRequest.prototype.send;
   window.XMLHttpRequest.prototype.send = function() {
@@ -195,6 +199,7 @@ copyActual();
         goLingo();
         checkProbes();
         copyActual();
+        ghost();
       }, 2500);
     }
     var pointer = this
