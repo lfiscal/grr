@@ -84,9 +84,10 @@ sortRows();
 
 function google() {
   base = "https://www.google.com/search?q=";
+  queryD = utt.replace('hey siri ','');
   $('[class=utterance-text]:eq(1)').css(linkStyle);
   $('[class=utterance-text]:eq(1)').click(function() {
-    window.open(base + utt, "_blank")
+    window.open(base + queryD, "_blank")
   })
 }
 google();
