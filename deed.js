@@ -53,7 +53,7 @@ function editDistance(s1, s2) {
 }
 
 function checkUtts() {
-  utt = $('[class=utterance-text]:eq(1)').text().replace(/([^\w]*unsure:[^\w]*)+|([^\w]*artist:[^\w]*)+|([^\w]*scene:[^\w]*)+|([^\w]*truncated:[^\w]*)+|([^\w]*zone:[^\w]*)+|([^\w]*group:[^\w]*)+|([^\w]*appname:[^\w]*)+|([^\w]*room:[^\w]*)+|([^\w]*device[^\w]*)+|[^a-zA-Z0-9']+/g, " ").replace(/\s\s+/g, ' ').trim().toLowerCase()
+  utt = $('[class=utterance-text]:eq(1)').text().replace(/([^\w]*company:[^\w]*)+|([^\w]*contact:[^\w]*)+|([^\w]*unsure:[^\w]*)+|([^\w]*artist:[^\w]*)+|([^\w]*scene:[^\w]*)+|([^\w]*truncated:[^\w]*)+|([^\w]*zone:[^\w]*)+|([^\w]*group:[^\w]*)+|([^\w]*appname:[^\w]*)+|([^\w]*room:[^\w]*)+|([^\w]*device[^\w]*)+|[^a-zA-Z0-9']+/g, " ").replace(/\s\s+/g, ' ').trim().toLowerCase()
   $('.parse').each(function() {
     u = $(this).clone()
     u.find('.span-grade-selector, .entity-user-data, .label').remove().text().trim().toLowerCase();
