@@ -217,7 +217,7 @@ function searchLinks() {
   $('.parse').each(function() {
     u = $(this).clone()
     u.find('.span-grade-selector, .entity-user-data, .label, .sims').remove().text().trim().toLowerCase();
-    strippedUtt = u.text().replace(/\s\s+/g, ' ').trim().toLowerCase();
+    strippedUtt = u.text().replace(/\s\s+/g, ' ').trim().toLowerCase().replace('hey siri ', '');
 
     $(this).append("<div class='searchBlock'></div>");
 
@@ -267,7 +267,6 @@ searchLinks();
   };
 })();
 
-
 $('#right').prepend('<label id="minutes">00</label>:<label id="seconds">00</label>')
 
 var minutesLabel = document.getElementById("minutes");
@@ -289,7 +288,6 @@ function pad(val) {
     return valString;
   }
 }
-
 
 var counter = {
     docObj: $("<span contenteditable='true' tabindex='-1' style='padding: 6px 8px;border-radius:5px;border:1px solid lightgray; margin: 0px 10px;'>0</span"),
