@@ -340,5 +340,8 @@ document.addEventListener("keydown", function(e) {
     case "p":
       checkProbes();      
       break;
+    case "g":
+      searchLinks();      
+      break;
   }
 });
