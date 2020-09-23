@@ -64,7 +64,7 @@ function checkUtts() {
       $(this).find(".sims").length > 0
     }
     if ($(this).find('.sims').length > 0) {
-      console.log("already has percent")
+      //console.log("already has percent")
     } else {
       $(this).append("<p class='sims'>" + similarity(utt, strippedUtt).toFixed(2) + "</p>")
     }
@@ -79,12 +79,15 @@ function sortRows() {
     return $(a).find('div.domain-verb').text().toLowerCase() > $(b).find('div.domain-verb').text().toLowerCase();
   });
   $("[class=transitions]:eq(1)").html(alphabeticallyOrderedDivs);
+	hoverRank();
+        hoverTag();
+        hoverMark();
 }
 sortRows();
 
 function google() {
   base = "https://www.google.com/search?q=";
-  queryD = utt.replace('hey siri ','');
+  queryD = utt.replace('hey siri ', '');
   $('[class=utterance-text]:eq(1)').css(linkStyle);
   $('[class=utterance-text]:eq(1)').click(function() {
     window.open(base + queryD, "_blank")
@@ -106,17 +109,6 @@ function goLingo() {
   });
 }
 goLingo();
-
-function wolfram() {
-  var e = "https://www.wolframalpha.com/input/?i=";
-  $(".terminal-node").click(function(t) {
-    var i = $(this).text().slice(25).trim();
-    window.open(e + i, "_blank")
-    t.metaKey && window.open(e + i, "_blank")
-    console.log("Wolfram clicked");
-  });
-}
-wolfram();
 
 var checkProbes = function() {
 
@@ -181,18 +173,78 @@ function copyActual() {
 }
 copyActual();
 
-function ghost(){
-if ($('.ranked-list:contains("answerFacts")').length > 0) {
-  $('.rank-choice:contains("encyclopedia")').addClass('ency');
-} 
+function ghost() {
+  if ($('.ranked-list:contains("answerFacts")').length > 0) {
+    $('.rank-choice:contains("encyclopedia")').addClass('ency');
+  }
 }
 ghost();
+
+function hoverRank(){
+function handler(e) {
+    var target = $(e.target);
+    if( target.is(".rank select") ) {
+       target.focus();
+    }
+}
+$(".rank select").mouseover(handler)
+}
+hoverRank();
+
+function hoverTag(){
+function handler(e) {
+    var target = $(e.target);
+    if( target.is(".span-grade-selector") ) {
+       target.focus();
+    }
+}
+$(".span-grade-selector").mouseover(handler)
+}
+hoverTag();
+
+function hoverMark(){
+function handler(e) {
+    var target = $(e.target);
+    if( target.is(".entity-missing input[type=checkbox]") ) {
+       target.focus();
+    }
+}
+$(".entity-missing input[type=checkbox]").mouseover(handler)
+}
+hoverMark();
+
+function searchLinks() {
+  $('.parse').each(function() {
+    u = $(this).clone()
+    u.find('.span-grade-selector, .entity-user-data, .label, .sims').remove().text().trim().toLowerCase();
+    strippedUtt = u.text().replace(/\s\s+/g, ' ').trim().toLowerCase();
+
+    $(this).append("<div class='searchBlock'></div>");
+
+    if ($(this).find('.goog').length > 0) {
+      console.log("goog dupe")
+    } else {
+      $(this).find('.searchBlock').append("<a href='https://www.google.com/search?q=" + strippedUtt + "' class='goog' target='blank'>Google</a>")
+    }
+    if ($(this).find('.wolf').length > 0) {
+      console.log("wolf dupe")
+    } else {
+      $(this).find('.searchBlock').append("<a href='https://www.wolframalpha.com/input/?i=" + strippedUtt + "' class='wolf' target='blank'>Wolfram Alpha</a> ")
+    }
+    if ($(this).find('.wiki').length > 0) {
+      console.log("wiki dupe")
+    } else {
+      $(this).find('.searchBlock').append("<a href='https://en.wikipedia.org/wiki/Special:Search?search=" + strippedUtt + "' class='wiki' target='_blank'>Wikipedia</a> ")
+    }
+  });
+}
+searchLinks();
 
 (function() {
   var proxied = window.XMLHttpRequest.prototype.send;
   window.XMLHttpRequest.prototype.send = function() {
     if (this.__sentry_xhr__.url.includes("views")) {
-      console.log("New Utterance Loaded");
+      //console.log("New Utterance Loaded");
       setTimeout(function() {
         checkUtts();
         sortRows();
@@ -201,6 +253,7 @@ ghost();
         checkProbes();
         copyActual();
         ghost();
+				searchLinks();
       }, 2500);
     }
     var pointer = this
@@ -274,3 +327,20 @@ XMLHttpRequest.prototype.open = function(e, t) {
 }, hideParseSetting = !1, counter.init();
 
 $('#widget-container').append('<div class="btns"><button onclick="sortRows()">SORT </button><button onclick="checkUtts()">RECHECK</button><button onclick="goLingo()">LINGO</button><button onclick="checkProbes()">PROBES</button></div>')
+//keyboard shortcuts
+document.addEventListener("keydown", function(e) {
+  switch (e.key) {
+    case "s":
+	sortRows();	
+      break;
+    case "r":
+      checkUtts();
+      break;
+    case "l":
+      goLingo();
+      break;
+    case "p":
+      checkProbes();      
+      break;
+  }
+});
