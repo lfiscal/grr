@@ -79,19 +79,25 @@ function sortRows() {
     return $(a).find('div.domain-verb').text().toLowerCase() > $(b).find('div.domain-verb').text().toLowerCase();
   });
   $("[class=transitions]:eq(1)").html(alphabeticallyOrderedDivs);
-	hoverRank();
-        hoverTag();
-        hoverMark();
+  hoverRank();
+  hoverTag();
+  hoverMark();
 }
 sortRows();
 
 function google() {
   base = "https://www.google.com/search?q=";
   queryD = utt.replace('hey siri ', '');
-  $('[class=utterance-text]:eq(1)').css(linkStyle);
-  $('[class=utterance-text]:eq(1)').click(function() {
-    window.open(base + queryD, "_blank")
-  })
+  //$('[class=utterance-text]:eq(1)').css(linkStyle);
+  // $('[class=utterance-text]:eq(1)').click(function() {
+  //  window.open(base + queryD, "_blank")
+  // });
+
+  if ($('.user-utterance').find('.srch').length > 0) {} else {
+    $('.user-utterance').append('<a href="https://www.google.com/search?q=' + queryD + '" class="srch" target="blank">&#128269;</a>')
+  }
+
+
 }
 google();
 
@@ -101,33 +107,36 @@ function goLingo() {
     d = $(this).text().split(' ')[12].trim();
     v = $(this).text().replace(/(\r\n|\n|\r)/gm, "", " ").split("verb: ").pop().split('  ')[0];
 
-    if (v === "") {
-      $('  <a href="' + e + '' + d + '/description"target="_blank" class="lingoLink">Lingo</a>  ').appendTo(this);
+    if ($(this).find('.lingoLink').length > 0) {
+      //console.log("already has lingo")
     } else {
-      $('<a href="' + e + '' + d + '/labels/verb-label/' + v + '/description" target="_blank" class="lingoLink">Lingo</a>').appendTo(this);
+      if (v === "") {
+        $('  <a href="' + e + '' + d + '/description"target="_blank" class="lingoLink">Lingo</a>  ').appendTo(this);
+      } else {
+        $('<a href="' + e + '' + d + '/labels/verb-label/' + v + '/description" target="_blank" class="lingoLink">Lingo</a>').appendTo(this);
+      }
     }
   });
 }
 goLingo();
 
 var checkProbes = function() {
-$('.kv-bubble:contains("failure")').addClass("fail");
+  $('.kv-bubble:contains("failure")').addClass("fail");
 
-$('.kv-bubble:contains("success")').addClass("succeed")
+  $('.kv-bubble:contains("success")').addClass("succeed")
 
-var fails = $('.kv-bubble.fail').parent().find(".key-label").text().replace(/(\r\n|\n|\r)/gm, "", " ").split("  ").filter(item => item);
+  var fails = $('.kv-bubble.fail').parent().find(".key-label").text().replace(/(\r\n|\n|\r)/gm, "", " ").split("  ").filter(item => item);
 
-var succs = $('.kv-bubble.succeed').parent().find(".key-label").text().replace(/(\r\n|\n|\r)/gm, "", " ").split("  ").filter(item => item);
+  var succs = $('.kv-bubble.succeed').parent().find(".key-label").text().replace(/(\r\n|\n|\r)/gm, "", " ").split("  ").filter(item => item);
 
-$(".domain-verb").each(function() {
-  probe = $(this).text().replace(/(\r\n|\n|\r)/gm, "", " ").split("probe: ").pop().split('  ')[0];
-if (succs.includes(probe)) {
-    $(this).css("color", "green");
-  }  
-else if (fails.includes(probe)) {
-    $(this).css("color", "red");
-  } 
-});
+  $(".domain-verb").each(function() {
+    probe = $(this).text().replace(/(\r\n|\n|\r)/gm, "", " ").split("probe: ").pop().split('  ')[0];
+    if (succs.includes(probe)) {
+      $(this).css("color", "green");
+    } else if (fails.includes(probe)) {
+      $(this).css("color", "red");
+    }
+  });
 }
 checkProbes();
 
@@ -143,36 +152,36 @@ function ghost() {
 }
 ghost();
 
-function hoverRank(){
-function handler(e) {
+function hoverRank() {
+  function handler(e) {
     var target = $(e.target);
-    if( target.is(".rank select") ) {
-       target.focus();
+    if (target.is(".rank select")) {
+      target.focus();
     }
-}
-$(".rank select").mouseover(handler)
+  }
+  $(".rank select").mouseover(handler)
 }
 hoverRank();
 
-function hoverTag(){
-function handler(e) {
+function hoverTag() {
+  function handler(e) {
     var target = $(e.target);
-    if( target.is(".span-grade-selector") ) {
-       target.focus();
+    if (target.is(".span-grade-selector")) {
+      target.focus();
     }
-}
-$(".span-grade-selector").mouseover(handler)
+  }
+  $(".span-grade-selector").mouseover(handler)
 }
 hoverTag();
 
-function hoverMark(){
-function handler(e) {
+function hoverMark() {
+  function handler(e) {
     var target = $(e.target);
-    if( target.is(".entity-missing input[type=checkbox]") ) {
-       target.focus();
+    if (target.is(".entity-missing input[type=checkbox]")) {
+      target.focus();
     }
-}
-$(".entity-missing input[type=checkbox]").mouseover(handler)
+  }
+  $(".entity-missing input[type=checkbox]").mouseover(handler)
 }
 hoverMark();
 
@@ -185,19 +194,19 @@ function searchLinks() {
     $(this).append("<div class='searchBlock'></div>");
 
     if ($(this).find('.goog').length > 0) {
-      console.log("goog dupe")
+      //console.log("goog dupe")
     } else {
-      $(this).find('.searchBlock').append("<a href='https://www.google.com/search?q=" + strippedUtt + "' class='goog' target='blank'>Google</a>")
+      $(this).find('.searchBlock').append('<a href="https://www.google.com/search?q=' + strippedUtt + '" class="goog" target="blank">Google</a>')
     }
     if ($(this).find('.wolf').length > 0) {
-      console.log("wolf dupe")
+      //console.log("wolf dupe")
     } else {
-      $(this).find('.searchBlock').append("<a href='https://www.wolframalpha.com/input/?i=" + strippedUtt + "' class='wolf' target='blank'>Wolfram Alpha</a> ")
+      $(this).find('.searchBlock').append('<a href="https://www.wolframalpha.com/input/?i=' + strippedUtt + '" class="wolf" target="blank">Wolfram Alpha</a>')
     }
     if ($(this).find('.wiki').length > 0) {
-      console.log("wiki dupe")
+      // console.log("wiki dupe")
     } else {
-      $(this).find('.searchBlock').append("<a href='https://en.wikipedia.org/wiki/Special:Search?search=" + strippedUtt + "' class='wiki' target='_blank'>Wikipedia</a> ")
+      $(this).find('.searchBlock').append('<a href="https://en.wikipedia.org/wiki/Special:Search?search=' + strippedUtt + '" class="wiki" target="_blank">Wikipedia</a>')
     }
   });
 }
@@ -207,16 +216,10 @@ searchLinks();
   var proxied = window.XMLHttpRequest.prototype.send;
   window.XMLHttpRequest.prototype.send = function() {
     if (this.__sentry_xhr__.url.includes("views")) {
-      //console.log("New Utterance Loaded");
+      console.log("New Utterance Loaded");
       setTimeout(function() {
-        checkUtts();
-        sortRows();
-        google();
-        goLingo();
-        checkProbes();
-        copyActual();
-        ghost();
-				searchLinks();
+
+
       }, 2500);
     }
     var pointer = this
@@ -273,8 +276,14 @@ var counter = {
     tempOpen: XMLHttpRequest.prototype.open,
     tempSend: XMLHttpRequest.prototype.send,
     callback: function() {
-      this.url.includes("save_grade") && counter.onload()
-
+      this.url.includes("save_grade") && counter.onload();
+      checkUtts();
+      sortRows();
+      google();
+      goLingo();
+      checkProbes();
+      ghost();
+      searchLinks();
     }
   };
 XMLHttpRequest.prototype.open = function(e, t) {
@@ -292,7 +301,7 @@ $('#widget-container').append('<div class="btns"><button onclick="sortRows()">SO
 document.addEventListener("keydown", function(e) {
   switch (e.key) {
     case "s":
-	sortRows();	
+      sortRows();
       break;
     case "r":
       checkUtts();
@@ -301,10 +310,10 @@ document.addEventListener("keydown", function(e) {
       goLingo();
       break;
     case "p":
-      checkProbes();      
+      checkProbes();
       break;
     case "g":
-      searchLinks();      
+      searchLinks();
       break;
   }
 });
