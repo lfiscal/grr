@@ -301,14 +301,17 @@ XMLHttpRequest.prototype.open = function(e, t) {
 
 $('#widget-container').append('<div class="btns"><button onclick="sortRows()">SORT </button><button onclick="checkUtts()">RECHECK</button><button onclick="goLingo()">LINGO</button><button onclick="checkProbes()">PROBES</button></div>')
 //keyboard shortcuts
+function reload() {
+  sortRows();
+  checkUtts();
+  goLingo();
+  checkProbes();
+  searchLinks();
+}
 document.addEventListener("keydown", function(e) {
   switch (e.key) {
     case "r":
-      sortRows();
-      checkUtts();
-      goLingo();
-      checkProbes();
-      searchLinks();
+      reload();
       break;
   }
 });
