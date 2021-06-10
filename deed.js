@@ -87,16 +87,16 @@ sortRows();
 
 function google() {
   base = "https://www.google.com/search?q=";
-  queryD = utt.replace('hey siri ', '');
+  queryD = utt.replace('hey siri ', '').replace('play ', '');
   //$('[class=utterance-text]:eq(1)').css(linkStyle);
   // $('[class=utterance-text]:eq(1)').click(function() {
   //  window.open(base + queryD, "_blank")
   // });
 
   if ($('.user-utterance').find('.srch').length > 0) {} else {
-    $('.user-utterance').append('<a href="https://www.google.com/search?q=' + queryD + '" class="srch" target="blank">&#128269;</a>')
+    $('.user-utterance').append('<a href="https://www.google.com/search?q=' + queryD + '" class="srch" target="blank">&#128269;</a>  ')
+    $('.user-utterance').append(' <a href="https://music.apple.com/us/search?term=' + queryD + '" class="srch" target="blank">&#127911;</a>')
   }
-
 
 }
 google();
