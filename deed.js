@@ -189,7 +189,7 @@ function searchLinks() {
   $('.parse').each(function() {
     u = $(this).clone()
     u.find('.span-grade-selector, .entity-user-data, .label, .sims').remove().text().trim().toLowerCase();
-    strippedUtt = u.text().replace(/\s\s+/g, ' ').trim().toLowerCase().replace('hey siri ', '');
+    strippedUtt = u.text().replace(/\s\s+/g, ' ').trim().toLowerCase().replace('hey siri ', '').replace('play ', '');
 
     $(this).append("<div class='searchBlock'></div>");
 
@@ -208,6 +208,10 @@ function searchLinks() {
     } else {
       $(this).find('.searchBlock').append('<a href="https://en.wikipedia.org/wiki/Special:Search?search=' + strippedUtt + '" class="wiki" target="_blank">Wikipedia</a>')
     }
+    if ($(this).find('.music').length > 0) {
+    } else {
+  $(this).find('.searchBlock').append('<a href="https://music.apple.com/us/search?term=' + strippedUtt + '" class="music" target="_blank">Apple Music</a>')
+}
   });
 }
 searchLinks();
@@ -218,9 +222,14 @@ searchLinks();
     if (this.__sentry_xhr__.url.includes("views")) {
       console.log("New Utterance Loaded");
       setTimeout(function() {
-
-
-      }, 2500);
+      checkUtts();
+      sortRows();
+      google();
+      goLingo();
+      checkProbes();
+      ghost();
+      searchLinks();
+      }, 1500);
     }
     var pointer = this
     var intervalId = window.setInterval(function() {
@@ -277,13 +286,7 @@ var counter = {
     tempSend: XMLHttpRequest.prototype.send,
     callback: function() {
       this.url.includes("save_grade") && counter.onload();
-      checkUtts();
-      sortRows();
-      google();
-      goLingo();
-      checkProbes();
-      ghost();
-      searchLinks();
+      
     }
   };
 XMLHttpRequest.prototype.open = function(e, t) {
@@ -300,19 +303,11 @@ $('#widget-container').append('<div class="btns"><button onclick="sortRows()">SO
 //keyboard shortcuts
 document.addEventListener("keydown", function(e) {
   switch (e.key) {
-    case "s":
-      sortRows();
-      break;
     case "r":
+      sortRows();
       checkUtts();
-      break;
-    case "l":
       goLingo();
-      break;
-    case "p":
       checkProbes();
-      break;
-    case "g":
       searchLinks();
       break;
   }
