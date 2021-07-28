@@ -189,7 +189,7 @@ function searchLinks() {
   $('.parse').each(function() {
     u = $(this).clone()
     u.find('.span-grade-selector, .entity-user-data, .label, .sims').remove().text().trim().toLowerCase();
-    strippedUtt = u.text().replace(/\s\s+/g, ' ').trim().toLowerCase().replace('hey siri ', '').replace('play ', '');
+    strippedUtt = u.text().replace(/\s\s+/g, ' ').trim().toLowerCase().replace('hey siri ', '').replace('play ', '').replace('on spotify ', '').replace('on apple music ', '').replace('on youtube ', '').replace('please ', '').replace('can you ', '');
 
     $(this).append("<div class='searchBlock'></div>");
 
@@ -307,10 +307,15 @@ function reload() {
   goLingo();
   checkProbes();
   searchLinks();
+  google();
+  ghost();
 }
 document.addEventListener("keydown", function(e) {
   switch (e.key) {
     case "r":
+      reload();
+      break;
+      case "q":
       reload();
       break;
   }
