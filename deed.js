@@ -318,5 +318,20 @@ document.addEventListener("keydown", function(e) {
       case "q":
       reload();
       break;
+      case "1":
+      reload();
+      break;
+      case "2":
+      reload();
+      break;
+      case "3":
+      reload();
+      break;
+      case "4":
+      reload();
+      break;
+      case "5":
+      reload();
+      break;
   }
 });
